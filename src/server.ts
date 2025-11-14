@@ -3,24 +3,39 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-  ListResourcesRequestSchema,
-  ReadResourceRequestSchema,
+  ErrorCode,
+  McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 
-export class ProjectManagerServer {
+import { connectionTools, handleConnectionTool } from './tools/connection.js';
+import { queryAnalysisTools, handleQueryAnalysisTool } from './tools/query-analysis.js';
+import { schemaManagementTools, handleSchemaManagementTool } from './tools/schema-management.js';
+import { dataAnalysisTools, handleDataAnalysisTool } from './tools/data-analysis.js';
+import { backupRestoreTools, handleBackupRestoreTool } from './tools/backup-restore.js';
+import { securityTools, handleSecurityTool } from './tools/security.js';
+
+// Combine all tools
+const allTools = [
+  ...connectionTools,
+  ...queryAnalysisTools,
+  ...schemaManagementTools,
+  ...dataAnalysisTools,
+  ...backupRestoreTools,
+  ...securityTools,
+];
+
+export class DatabaseMCPServer {
   private server: Server;
-  private tools: Map<string, any> = new Map();
 
   constructor() {
     this.server = new Server(
       {
-        name: 'mcp-project-manager',
+        name: 'mcp-database-manager',
         version: '1.0.0',
       },
       {
         capabilities: {
           tools: {},
-          resources: {},
         },
       }
     );
@@ -28,11 +43,11 @@ export class ProjectManagerServer {
     this.setupHandlers();
   }
 
-  private setupHandlers() {
-    // List available tools
+  private setupHandlers(): void {
+    // List tools
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
       return {
-        tools: Array.from(this.tools.values()),
+        tools: allTools,
       };
     });
 
@@ -40,14 +55,29 @@ export class ProjectManagerServer {
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const { name, arguments: args } = request.params;
 
-      const tool = this.tools.get(name);
-      if (!tool) {
-        throw new Error(`Tool ${name} not found`);
-      }
-
       try {
-        const handler = tool.handler;
-        const result = await handler(args);
+        let result: unknown;
+
+        // Route to appropriate handler
+        if (connectionTools.some((t) => t.name === name)) {
+          result = await handleConnectionTool(name, args || {});
+        } else if (queryAnalysisTools.some((t) => t.name === name)) {
+          result = await handleQueryAnalysisTool(name, args || {});
+        } else if (schemaManagementTools.some((t) => t.name === name)) {
+          result = await handleSchemaManagementTool(name, args || {});
+        } else if (dataAnalysisTools.some((t) => t.name === name)) {
+          result = await handleDataAnalysisTool(name, args || {});
+        } else if (backupRestoreTools.some((t) => t.name === name)) {
+          result = await handleBackupRestoreTool(name, args || {});
+        } else if (securityTools.some((t) => t.name === name)) {
+          result = await handleSecurityTool(name, args || {});
+        } else {
+          throw new McpError(
+            ErrorCode.MethodNotFound,
+            `Unknown tool: ${name}`
+          );
+        }
+
         return {
           content: [
             {
@@ -56,104 +86,25 @@ export class ProjectManagerServer {
             },
           ],
         };
-      } catch (error: any) {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `Error: ${error.message}`,
-            },
-          ],
-          isError: true,
-        };
-      }
-    });
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorStack = error instanceof Error ? error.stack : undefined;
 
-    // List available resources
-    this.server.setRequestHandler(ListResourcesRequestSchema, async () => {
-      return {
-        resources: [
+        throw new McpError(
+          ErrorCode.InternalError,
+          `Tool execution failed: ${errorMessage}`,
           {
-            uri: 'file://project-structure',
-            name: 'Project Structure',
-            description: 'Current project structure analysis',
-            mimeType: 'application/json',
-          },
-          {
-            uri: 'file://project-metrics',
-            name: 'Project Metrics',
-            description: 'Project metrics and statistics',
-            mimeType: 'application/json',
-          },
-          {
-            uri: 'file://code-analysis',
-            name: 'Code Analysis',
-            description: 'Code analysis results',
-            mimeType: 'application/json',
-          },
-        ],
-      };
-    });
-
-    // Handle resource reads
-    this.server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
-      const { uri } = request.params;
-
-      // For now, return placeholder data
-      // This will be populated by the actual analysis tools
-      if (uri === 'file://project-structure') {
-        return {
-          contents: [
-            {
-              uri,
-              mimeType: 'application/json',
-              text: JSON.stringify({ message: 'Project structure will be populated by analysis tools' }, null, 2),
-            },
-          ],
-        };
+            stack: errorStack,
+          }
+        );
       }
-
-      if (uri === 'file://project-metrics') {
-        return {
-          contents: [
-            {
-              uri,
-              mimeType: 'application/json',
-              text: JSON.stringify({ message: 'Project metrics will be populated by analysis tools' }, null, 2),
-            },
-          ],
-        };
-      }
-
-      if (uri === 'file://code-analysis') {
-        return {
-          contents: [
-            {
-              uri,
-              mimeType: 'application/json',
-              text: JSON.stringify({ message: 'Code analysis will be populated by analysis tools' }, null, 2),
-            },
-          ],
-        };
-      }
-
-      throw new Error(`Resource ${uri} not found`);
     });
   }
 
-  public registerTool(name: string, description: string, inputSchema: any, handler: (args: any) => Promise<any>) {
-    this.tools.set(name, {
-      name,
-      description,
-      inputSchema,
-      handler,
-    });
-  }
-
-  public async start() {
+  async run(): Promise<void> {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error('MCP Project Manager Server started');
+    console.error('MCP Database Manager server running on stdio');
   }
 }
 

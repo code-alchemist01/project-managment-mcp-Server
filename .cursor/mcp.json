@@ -1,0 +1,10 @@
+﻿{
+    "mcpServers":  {
+                       "database-manager":  {
+                                                "args":  [
+                                                             "C:\\Users\\excalibur\\Desktop\\Projeler\\MCP\\dist\\index.js"
+                                                         ],
+                                                "command":  "node"
+                                            }
+                   }
+}

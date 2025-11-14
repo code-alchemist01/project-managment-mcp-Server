@@ -1,59 +1,38 @@
-# MCP Project Manager
+# MCP Database Manager
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green)](https://nodejs.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![MCP](https://img.shields.io/badge/MCP-1.0-orange.svg)](https://modelcontextprotocol.io/)
 
-**Akıllı Dosya ve Proje Yönetim MCP Server** - AI asistanlarının proje analizi, kod metrikleri, dokümantasyon ve Git işlemlerini yönetebileceği kapsamlı bir Model Context Protocol (MCP) server.
+Comprehensive MCP (Model Context Protocol) server for database management and analysis. Supports multiple database types including PostgreSQL, MySQL, SQLite, SQL Server, MongoDB, and Redis.
 
-## 🚀 Özellikler
+## 🎯 Ne İşe Yarar?
 
-### 📊 Proje Analizi
-- **Dosya yapısı analizi**: Proje dizin ağacını çıkarır, dosya türlerini kategorize eder
-- **Bağımlılık haritası**: Import/require ilişkilerini görselleştirir, circular dependency tespiti
-- **Teknoloji stack tespiti**: Kullanılan framework'leri, kütüphaneleri otomatik tespit eder
-- **Proje metrikleri**: Kod satır sayısı, dosya sayısı, dil dağılımı
+MCP Database Manager, AI asistanlarının (Cursor, Claude, vb.) veritabanlarıyla etkileşime girmesi, sorguları analiz etmesi ve veritabanı yönetim görevlerini gerçekleştirmesi için kapsamlı bir MCP server'dır.
 
-### 📈 Kod Metrikleri
-- **Cyclomatic complexity** hesaplama
-- **Code smell** tespiti (uzun fonksiyonlar, tekrarlanan kod, magic numbers, vb.)
-- **Test coverage** analizi
+### Temel Özellikler
 
-### 📝 Otomatik Dokümantasyon
-- **API dokümantasyonu** oluşturma (JSDoc, Python docstrings)
-- **README.md** otomatik güncelleme
-- **Changelog** oluşturma ve güncelleme
+- **🔌 Çoklu Veritabanı Desteği**: PostgreSQL, MySQL, SQLite, SQL Server, MongoDB, Redis
+- **🔍 SQL Sorgu Analizi**: Performance analizi, execution plan, index önerileri
+- **📊 Şema Yönetimi**: ER diyagramları, migration generation, dokümantasyon
+- **📈 Veri Analizi**: İstatistikler, kalite kontrolü, duplicate detection
+- **💾 Backup & Restore**: Otomatik backup ve restore işlemleri
+- **🔒 Güvenlik**: İzin analizi, güvenlik açığı tespiti, sensitive data detection
 
-### 🔍 Git Analizi
-- **Commit mesajı analizi** ve öneriler
-- **Branch stratejisi** önerileri
-- **Diff analizi** ve değişiklik özeti
-
-### 🗂️ Proje Organizasyonu
-- **Dosya taşıma/yerleştirme** önerileri
-- **Dependency güncelleme** kontrolü
-
-## 🌍 Desteklenen Diller
-
-- JavaScript / TypeScript
-- Python
-- Java
-- Go
-- Rust
-
-## 📦 Kurulum
+## 🚀 Kurulum
 
 ### Gereksinimler
 
-- Node.js 18+
+- Node.js 18 veya üzeri
 - npm veya yarn
+- TypeScript (dev dependency)
 
 ### Adımlar
 
-1. **Projeyi klonlayın:**
+1. **Repository'yi klonlayın:**
 ```bash
-git clone https://github.com/code-alchemist01/project-managment-mcp-Server.git
-cd project-managment-mcp-Server
+git clone https://github.com/code-alchemist01/database-manager-mcp-Server.git
+cd database-manager-mcp-Server
 ```
 
 2. **Bağımlılıkları yükleyin:**
@@ -66,178 +45,160 @@ npm install
 npm run build
 ```
 
-## 🔧 Kullanım
-
-### MCP Server Olarak Çalıştırma
-
-MCP server'ı çalıştırmak için:
-
+4. **Test edin:**
 ```bash
 npm start
 ```
 
-veya development modunda:
+## 📦 Cursor'a Kurulum
 
-```bash
-npm run dev
+### 1. MCP Config Dosyasını Oluştur/Düzenle
+
+**Windows:**
+```
+%APPDATA%\Cursor\User\globalStorage\mcp.json
 ```
 
-### Cursor için Konfigürasyon
+**macOS/Linux:**
+```
+~/.config/Cursor/User/globalStorage/mcp.json
+```
 
-1. Cursor ayarlarını açın (Settings)
-2. MCP bölümüne gidin
-3. Aşağıdaki konfigürasyonu ekleyin:
+### 2. Config İçeriği
 
 ```json
 {
   "mcpServers": {
-    "project-manager": {
+    "database-manager": {
       "command": "node",
-      "args": ["/absolute/path/to/project-managment-mcp-Server/dist/index.js"]
+      "args": [
+        "C:\\Users\\YourUsername\\path\\to\\database-manager-mcp-Server\\dist\\index.js"
+      ]
     }
   }
 }
 ```
 
-**Not:** `args` içindeki yol, projenizin `dist/index.js` dosyasının tam yolunu içermelidir.
+**Not:** `args` içindeki path'i kendi proje yolunuza göre güncelleyin.
 
-### Claude Desktop için Konfigürasyon
+### 3. Cursor'u Yeniden Başlatın
 
-`%APPDATA%\Claude\claude_desktop_config.json` dosyasını düzenleyin:
+Config dosyasını kaydettikten sonra Cursor'u tamamen kapatıp yeniden açın.
 
-```json
-{
-  "mcpServers": {
-    "project-manager": {
-      "command": "node",
-      "args": ["/absolute/path/to/project-managment-mcp-Server/dist/index.js"]
-    }
-  }
-}
-```
+### 4. Doğrulama
 
-## 🛠️ MCP Tools
+Cursor'da **Settings > Tools & MCP** bölümünde "database-manager" listede görünmeli.
 
-### Proje Analizi Tools
+## 🛠️ Kullanım
 
-#### `analyze_project_structure`
-Proje dizin yapısını analiz eder ve hiyerarşik yapıyı döner.
-
-**Parametreler:**
-- `path` (string, required): Analiz edilecek proje yolu
-- `depth` (number, optional): Maksimum derinlik (default: 10)
-
-#### `detect_tech_stack`
-Projede kullanılan teknolojileri tespit eder.
-
-#### `analyze_dependencies`
-Import/require ilişkilerini analiz eder ve bağımlılık grafiği oluşturur.
-
-#### `get_project_metrics`
-Proje genel metriklerini hesaplar.
-
-### Kod Metrikleri Tools
-
-#### `calculate_complexity`
-Cyclomatic complexity hesaplar.
-
-#### `detect_code_smells`
-Code smell'leri tespit eder.
-
-#### `analyze_test_coverage`
-Test coverage analizi yapar.
-
-### Dokümantasyon Tools
-
-#### `generate_readme`
-README.md dosyası oluşturur/günceller.
-
-#### `generate_api_docs`
-API dokümantasyonu oluşturur.
-
-#### `update_changelog`
-CHANGELOG.md dosyasını günceller.
-
-### Git Analiz Tools
-
-#### `analyze_commits`
-Commit mesajlarını analiz eder.
-
-#### `suggest_branch_strategy`
-Branch stratejisi önerileri sunar.
-
-#### `analyze_diff`
-Git diff'i analiz eder.
-
-### Proje Organizasyon Tools
-
-#### `suggest_file_structure`
-Dosya yapısı önerileri sunar.
-
-#### `check_dependencies`
-Dependency güncellemelerini kontrol eder.
-
-## 💡 Kullanım Örnekleri
-
-### Cursor veya Claude Desktop'ta
-
-AI asistanınıza şunları sorabilirsiniz:
+### Cursor Chat'te Örnek Komutlar
 
 ```
-Bu projeyi analiz et: /path/to/project
+SQLite veritabanına bağlan: sqlite://test.db
 ```
 
 ```
-Bu projede hangi teknolojiler kullanılıyor?
+Bağlı veritabanların listesini göster
 ```
 
 ```
-Code smell'leri bul ve öneriler sun
+Şemayı göster
 ```
 
 ```
-README oluştur
+users tablosunun istatistiklerini getir
 ```
 
 ```
-Git commit'lerini analiz et
+SELECT * FROM users WHERE age > 25 sorgusunu analiz et
 ```
 
-## 🧪 Test
-
-Testleri çalıştırmak için:
-
-```bash
-npm test
+```
+users tablosunda duplicate kayıtları bul
 ```
 
-Gerçek proje üzerinde test:
+## 📋 MCP Tools (27 Araç)
 
-```bash
-node test-gercek-proje.mjs
-```
+### Connection Management (4)
+- `connect_database` - Veritabanına bağlan
+- `list_connections` - Aktif bağlantıları listele
+- `disconnect_database` - Bağlantıyı kapat
+- `test_connection` - Bağlantıyı test et
+
+### Query Analysis (5)
+- `analyze_query` - SQL sorgusunu analiz et
+- `explain_query` - Execution plan göster
+- `optimize_query` - Sorgu optimizasyon önerileri
+- `detect_slow_queries` - Yavaş sorguları tespit et
+- `suggest_indexes` - Index önerileri
+
+### Schema Management (5)
+- `get_schema` - Şema bilgilerini getir
+- `visualize_schema` - ER diyagramı oluştur (Mermaid)
+- `analyze_foreign_keys` - Foreign key analizi
+- `generate_migration` - Migration script oluştur
+- `document_schema` - Şema dokümantasyonu
+
+### Data Analysis (5)
+- `get_table_stats` - Tablo istatistikleri
+- `analyze_data_quality` - Veri kalitesi analizi
+- `find_duplicates` - Duplicate kayıtları bul
+- `sample_data` - Veri örnekleme
+- `generate_report` - Custom rapor oluştur
+
+### Backup & Restore (4)
+- `create_backup` - Backup oluştur
+- `list_backups` - Backup'ları listele
+- `restore_backup` - Backup'tan geri yükle
+- `verify_backup` - Backup doğrula
+
+### Security (4)
+- `analyze_permissions` - İzin analizi
+- `detect_vulnerabilities` - Güvenlik açığı tespiti
+- `find_sensitive_data` - Hassas veri tespiti
+- `audit_logs` - Audit log analizi
+
+## 🗄️ Desteklenen Veritabanları
+
+| Veritabanı | Durum | Özellikler |
+|-----------|-------|------------|
+| PostgreSQL | ✅ | Connection, Query, Schema, Transactions |
+| MySQL | ✅ | Connection, Query, Schema, Transactions |
+| SQLite | ✅ | Connection, Query, Schema, Transactions |
+| SQL Server | ✅ | Connection, Query, Schema, Transactions |
+| MongoDB | ✅ | Connection, Query, Schema, Collections |
+| Redis | ✅ | Connection, Commands, Keys |
 
 ## 📁 Proje Yapısı
 
 ```
-mcp-project-manager/
+database-manager-mcp-Server/
 ├── src/
 │   ├── index.ts                 # MCP server ana giriş noktası
 │   ├── server.ts                # MCP server implementasyonu
-│   ├── tools/                   # MCP tools (komutlar)
-│   │   ├── project-analysis.ts
-│   │   ├── code-metrics.ts
-│   │   ├── documentation.ts
-│   │   ├── git-analysis.ts
-│   │   └── project-org.ts
+│   ├── tools/                   # MCP tools
+│   │   ├── connection.ts        # Veritabanı bağlantı yönetimi
+│   │   ├── query-analysis.ts   # Sorgu analizi
+│   │   ├── schema-management.ts # Şema yönetimi
+│   │   ├── data-analysis.ts    # Veri analizi
+│   │   ├── backup-restore.ts   # Backup/restore
+│   │   └── security.ts         # Güvenlik
+│   ├── database/                # Veritabanı adaptörleri
+│   │   ├── base-adapter.ts     # Temel adapter interface
+│   │   ├── postgresql.ts       # PostgreSQL adapter
+│   │   ├── mysql.ts            # MySQL adapter
+│   │   ├── sqlite.ts           # SQLite adapter
+│   │   ├── mssql.ts            # SQL Server adapter
+│   │   ├── mongodb.ts          # MongoDB adapter
+│   │   └── redis.ts            # Redis adapter
 │   ├── analyzers/               # Analiz motorları
-│   │   ├── file-analyzer.ts
-│   │   ├── dependency-analyzer.ts
-│   │   ├── code-analyzer.ts
-│   │   └── git-analyzer.ts
+│   │   ├── query-analyzer.ts   # Sorgu analizi
+│   │   ├── schema-analyzer.ts  # Şema analizi
+│   │   ├── data-analyzer.ts    # Veri analizi
+│   │   └── security-analyzer.ts # Güvenlik analizi
 │   ├── utils/                   # Yardımcı fonksiyonlar
-│   │   ├── file-utils.ts
-│   │   ├── parser-utils.ts
+│   │   ├── connection-manager.ts
+│   │   ├── query-builder.ts
 │   │   └── formatters.ts
 │   └── types/                   # TypeScript tip tanımları
 │       └── index.ts
@@ -247,32 +208,93 @@ mcp-project-manager/
 └── README.md
 ```
 
-## 🤝 Katkıda Bulunma
+## 🔧 Geliştirme
 
-Katkılarınızı bekliyoruz! Lütfen bir issue açın veya pull request gönderin.
+### Development Modu
+
+```bash
+npm run dev
+```
+
+### Build
+
+```bash
+npm run build
+```
+
+### Test
+
+```bash
+npm test
+```
+
+## 📝 Örnek Kullanım Senaryoları
+
+### Senaryo 1: SQLite Veritabanı Analizi
+
+```javascript
+// Cursor chat'te:
+"SQLite veritabanına bağlan: sqlite://mydb.db"
+"Şemayı göster"
+"users tablosunun istatistiklerini getir"
+"users tablosunda duplicate kayıtları bul"
+```
+
+### Senaryo 2: PostgreSQL Query Optimizasyonu
+
+```javascript
+// Cursor chat'te:
+"PostgreSQL veritabanına bağlan: postgresql://user:pass@localhost:5432/dbname"
+"SELECT * FROM orders WHERE customer_id = 123 sorgusunu analiz et"
+"Bu sorgu için index önerileri yap"
+```
+
+### Senaryo 3: Schema Migration
+
+```javascript
+// Cursor chat'te:
+"İki şema arasındaki farkları bul ve migration script oluştur"
+"Schema'yı ER diagram olarak görselleştir"
+```
+
+## 🔐 Güvenlik
+
+- Connection string'ler güvenli saklanır
+- SQL injection koruması (parameterized queries)
+- Query timeout yönetimi
+- Read-only mode desteği
+- Input validation ve sanitization
+
+## 📊 Çıktı Formatları
+
+- **JSON** - Structured data responses
+- **Markdown** - Raporlar ve dokümantasyon
+- **CSV** - Veri export
+- **SQL** - Migration scripts
+- **Mermaid** - ER diyagramları
+
+## 🤝 Katkıda Bulunma
 
 1. Fork edin
 2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Commit edin (`git commit -m 'Add some amazing feature'`)
+3. Commit edin (`git commit -m 'Add amazing feature'`)
 4. Push edin (`git push origin feature/amazing-feature`)
 5. Pull Request açın
 
 ## 📄 Lisans
 
-Bu proje MIT lisansı altında lisanslanmıştır.
+MIT License - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
 ## 🙏 Teşekkürler
 
-- [Model Context Protocol](https://modelcontextprotocol.io/) - MCP protokolü için
-- [Tree-sitter](https://tree-sitter.github.io/tree-sitter/) - Kod parsing için
+- [Model Context Protocol](https://modelcontextprotocol.io/) - MCP standardı için
+- [Cursor](https://cursor.sh/) - MCP desteği için
 
-## 🔗 İlgili Linkler
+## 📞 İletişim
 
-- [MCP Dokümantasyonu](https://modelcontextprotocol.io/)
-- [Cursor IDE](https://cursor.sh/)
-- [Claude Desktop](https://claude.ai/desktop)
+Sorularınız veya önerileriniz için issue açabilirsiniz.
 
 ---
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
+**⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!**
 

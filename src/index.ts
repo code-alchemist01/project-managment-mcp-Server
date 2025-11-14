@@ -1,25 +1,38 @@
-import { ProjectManagerServer } from './server.js';
-import { registerProjectAnalysisTools } from './tools/project-analysis.js';
-import { registerCodeMetricsTools } from './tools/code-metrics.js';
-import { registerDocumentationTools } from './tools/documentation.js';
-import { registerGitAnalysisTools } from './tools/git-analysis.js';
-import { registerProjectOrgTools } from './tools/project-org.js';
+import { DatabaseMCPServer } from './server.js';
+import { connectionManager } from './utils/connection-manager.js';
 
+// Handle graceful shutdown
+process.on('SIGINT', async () => {
+  console.error('Shutting down...');
+  await connectionManager.disconnectAll();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  console.error('Shutting down...');
+  await connectionManager.disconnectAll();
+  process.exit(0);
+});
+
+// Handle uncaught errors
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught exception:', error);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+
+// Start the server
 async function main() {
-  const server = new ProjectManagerServer();
-
-  // Register all tool categories
-  registerProjectAnalysisTools(server);
-  registerCodeMetricsTools(server);
-  registerDocumentationTools(server);
-  registerGitAnalysisTools(server);
-  registerProjectOrgTools(server);
-
-  await server.start();
+  const server = new DatabaseMCPServer();
+  await server.run();
 }
 
 main().catch((error) => {
-  console.error('Fatal error:', error);
+  console.error('Failed to start server:', error);
   process.exit(1);
 });
 
