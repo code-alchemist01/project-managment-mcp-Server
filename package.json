@@ -1,5 +1,5 @@
 {
-  "name": "@code-alchemist01/mcp-project-manager",
+  "name": "mcp-project-manager-server",
   "version": "1.0.0",
   "description": "Akıllı Dosya ve Proje Yönetim MCP Server - AI asistanlarının proje analizi, kod metrikleri, dokümantasyon ve Git işlemlerini yönetebileceği kapsamlı bir Model Context Protocol server",
   "main": "dist/index.js",
