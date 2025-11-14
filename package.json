@@ -1,9 +1,33 @@
 {
-  "name": "mcp-project-manager",
+  "name": "@code-alchemist01/mcp-project-manager",
   "version": "1.0.0",
-  "description": "Akıllı Dosya ve Proje Yönetim MCP Server",
+  "description": "Akıllı Dosya ve Proje Yönetim MCP Server - AI asistanlarının proje analizi, kod metrikleri, dokümantasyon ve Git işlemlerini yönetebileceği kapsamlı bir Model Context Protocol server",
   "main": "dist/index.js",
   "type": "module",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "project-management",
+    "code-analysis",
+    "documentation",
+    "git-analysis",
+    "code-metrics",
+    "cursor",
+    "claude",
+    "ai-assistant"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-alchemist01/project-managment-mcp-Server.git"
+  },
+  "homepage": "https://github.com/code-alchemist01/project-managment-mcp-Server#readme",
+  "bugs": {
+    "url": "https://github.com/code-alchemist01/project-managment-mcp-Server/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
