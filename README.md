@@ -3,6 +3,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![MCP](https://img.shields.io/badge/MCP-1.0-orange.svg)](https://modelcontextprotocol.io/)
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/005dc855-09df-483e-a649-0499d362c6ca)
+
 
 Smart File and Project Management MCP Server - A comprehensive Model Context Protocol (MCP) server where AI assistants can manage project analysis, code metrics, documentation, and Git operations.
 
@@ -301,6 +303,5 @@ Sorularınız veya önerileriniz için issue açabilirsiniz.
 
 ---
 
-[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/005dc855-09df-483e-a649-0499d362c6ca)
 
 **⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!**
