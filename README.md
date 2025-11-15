@@ -4,7 +4,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![MCP](https://img.shields.io/badge/MCP-1.0-orange.svg)](https://modelcontextprotocol.io/)
 
-Akıllı Dosya ve Proje Yönetim MCP Server - AI asistanlarının proje analizi, kod metrikleri, dokümantasyon ve Git işlemlerini yönetebileceği kapsamlı bir Model Context Protocol (MCP) server.
+Smart File and Project Management MCP Server - A comprehensive Model Context Protocol (MCP) server where AI assistants can manage project analysis, code metrics, documentation, and Git operations.
 
 ## 🎯 Ne İşe Yarar?
 
