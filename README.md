@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/code-alchemist01-project-managment-mcp-server-badge.png)](https://mseep.ai/app/code-alchemist01-project-managment-mcp-server)
+
 # MCP Database Manager
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
