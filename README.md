@@ -301,4 +301,6 @@ Sorularınız veya önerileriniz için issue açabilirsiniz.
 
 ---
 
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/005dc855-09df-483e-a649-0499d362c6ca)
+
 **⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!**
